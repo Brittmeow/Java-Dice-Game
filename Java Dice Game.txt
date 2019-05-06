@@ -1,0 +1,111 @@
+//Rules:
+//2 players take turns "rolling dice"
+//First to 50 points wins
+//Bust if you roll 1 (0 points for the round)
+//Points earned=sum of dice rolls for that turn
+
+package dicegame;
+
+import java.util.*;
+
+public class DiceGame {
+    
+    public static void main(String[] args) {
+        Scanner input=new Scanner(System.in);
+        int player1Points=0;
+        int player2Points=0;
+        int roundPoints=0;
+        int turn=1;
+        int quit=0;
+        Random rand = new Random();
+        int diceRoll;
+        System.out.printf("Welcome to the dice game!%nRules:%nTake turns rolling the dice%nIf you roll a 1, "
+                + "you bust and get 0 points for the round%nIf you stop before you roll a 1, the sum of the"
+                + " dice rolled are your points for the round%nHave Fun!%n");
+           
+        //Run the loop while the
+        while(player1Points<50 && player2Points<50)
+        {
+                if(turn==1) //Player 1's turn
+                {
+                    System.out.println("Player 1 roll? (1 for yes, anything else for no): ");
+                    quit=input.nextInt();
+                    if(quit==1)  //roll again
+                    {
+                    diceRoll = rand.nextInt(5); //random number 0-5
+                        diceRoll += 1; //range is 0-5 so adding 1 gives range 0-6
+                        System.out.println("Player 1 rolled: "+diceRoll);
+                        if(diceRoll==1) //bust 
+                        {
+                            roundPoints=0; //reset round points for next turn
+                            System.out.println("Player 1 bust! +0 points this round :(");
+                            System.out.println("Player 1 total points: "+player1Points);
+                            turn=2; //set turn to player 2
+                        }
+                        else
+                        {
+                            roundPoints=roundPoints+diceRoll;
+                        }
+                    }
+                    else  //quit for this round
+                    {
+                        System.out.println("Player 1 points this round: "+roundPoints);
+                        player1Points=player1Points+roundPoints;
+                        System.out.println("Player 1 total points: "+player1Points);
+                        turn=2; //set to player 2's turn
+                        roundPoints=0; //clear round points for the new round
+                    }
+                }
+            
+            if(player1Points>=50)
+            {
+                //added this in case player 1 wins- wont ask player 2 to roll again
+            }
+            else //player 1 hasnt won
+            {
+                if(turn==2) //Player 2's turn
+                {
+                    System.out.println("Player 2 roll again? (1 for yes, anything else for no): ");
+                    quit=input.nextInt();
+                    if(quit==1)  //roll again
+                    {
+                        diceRoll = rand.nextInt(5); //random number 0-5
+                        diceRoll += 1; //range is 0-5 so adding 1 gives range 0-6
+                        System.out.println("Player 2 rolled: "+diceRoll);
+                        if(diceRoll==1) //bust 
+                        {
+                            roundPoints=0; //reset round points for next turn
+                            System.out.println("Player 2 bust! +0 points this round :(");
+                            System.out.println("Player 2 total points: "+player2Points);
+                            turn=1; //set turn to player 1
+                        }
+                        else
+                        {
+                         roundPoints=roundPoints+diceRoll;
+                        }
+                    }
+                    else  //quit for this round
+                    {
+                        System.out.println("Player 2 points this round: "+roundPoints);
+                        player2Points=player2Points+roundPoints;
+                        System.out.println("Player 2 total points: "+player2Points);
+                        turn=1; //set to player 1's turn
+                        roundPoints=0; //clear round points for the new round
+                    }
+                }
+            }
+        }
+        if(player1Points>=50) //player 1 wins
+        {
+            System.out.printf("%n%nPlayer 1 final points: "+player1Points);
+            System.out.printf("%nPlayer 2 final points: "+player2Points);
+            System.out.printf("%nPlayer 1 wins! Congratulations!");
+        }
+        else //player 2 wins
+        {
+            System.out.printf("%n%nPlayer 1 final points: "+player1Points);
+            System.out.printf("%nPlayer 2 final points: "+player2Points);
+            System.out.printf("%nPlayer 2 wins! Congratulations!");
+        }    
+    }
+}
